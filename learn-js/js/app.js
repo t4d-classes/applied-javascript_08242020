@@ -2,41 +2,22 @@
 
 const randomDelay = () => Math.floor(Math.random() * 1000) + 1000;
 
-// window.setTimeout(() => {
-//     console.log('a');
+const xhr = new XMLHttpRequest();
 
-//     window.setTimeout(() => {
-//         console.log('b');
+xhr.addEventListener('readystatechange', () => {
 
-//         window.setTimeout(() => {
-//             console.log('c');
-//         }, randomDelay());
-      
-//     }, randomDelay());
+  if (xhr.status === 200 && xhr.readyState === 4) {
+    console.log(JSON.parse(xhr.responseText));
+  }
 
-// }, randomDelay());
+});
 
-function allDone() {
-  console.log('all done');
-}
+xhr.open('GET', 'http://localhost:5050/colors');
+xhr.send();
 
-window.setTimeout(() => {
-  console.log('a');
-}, randomDelay());
+// Exercise
 
-window.setTimeout(() => {
-  console.log('b');
-}, randomDelay());
+// Create a function named 'myFetch' using the XHR code above to implement the following
+// API call
 
-window.setTimeout(() => {
-  console.log('c');
-}, randomDelay());
-
-// Objective: Call the allDone function when all three setTimeout callbacks complete
-
-// Rules:
-// 1. The calls to the setTimeout function must all occur in the same task
-// 2. The delays are random, and cannot be hard coded
-// 3. You may not wrap the allDone in its own setTimeout which some massive delay
-// 4. You may NOT use Promises
-
+myFetch('http://localhost:5050/colors').then(colors => console.log(colors));

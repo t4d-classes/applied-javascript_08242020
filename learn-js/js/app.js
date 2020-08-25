@@ -1,77 +1,42 @@
 'use strict';
 
-class Person {
+const randomDelay = () => Math.floor(Math.random() * 1000) + 1000;
 
-  static create(fullName) {
-    return new Person(...fullName.split(' '));
-  }
+// window.setTimeout(() => {
+//     console.log('a');
 
-  constructor(firstName, lastName) {
-    this._firstName = firstName;
-    this.lastName = lastName;
-  }
+//     window.setTimeout(() => {
+//         console.log('b');
 
-  get firstName() {
-    return this._firstName;
-  }
+//         window.setTimeout(() => {
+//             console.log('c');
+//         }, randomDelay());
+      
+//     }, randomDelay());
 
-  set firstName(value) {
-    this._firstName = value;
-  }
+// }, randomDelay());
 
-  getFullName() {
-    return this.firstName +  ' ' + this.lastName;
-  }
-
+function allDone() {
+  console.log('all done');
 }
 
-console.log(Person.create('Timmy Johnson'));
+window.setTimeout(() => {
+  console.log('a');
+}, randomDelay());
 
-class Student extends Person {
+window.setTimeout(() => {
+  console.log('b');
+}, randomDelay());
 
-  constructor(studentId, firstName, lastName) {
-    super(firstName, lastName);
-    this.studentId = studentId;
-  }
+window.setTimeout(() => {
+  console.log('c');
+}, randomDelay());
 
-  getRecordInfo() {
-    return this.studentId + ' ' + this.lastName + ', ' + this.firstName;
-  }
-}
+// Objective: Call the allDone function when all three setTimeout callbacks complete
 
-const student = new Student(1, 'Sally', 'Thompkins');
-console.log(student.getRecordInfo());
-console.log(student.getFullName());
-console.dir(student);
+// Rules:
+// 1. The calls to the setTimeout function must all occur in the same task
+// 2. The delays are random, and cannot be hard coded
+// 3. You may not wrap the allDone in its own setTimeout which some massive delay
+// 4. You may NOT use Promises
 
-function Person2(firstName, lastName) {
-  this.firstName = firstName;
-  this.lastName = lastName;
-}
-
-Person2.prototype.getFullName = function() {
-  return this.firstName +  ' ' + this.lastName;
-};
-
-function Student2(studentId, firstName, lastName) {
-  this._super(firstName, lastName);
-  this.studentId = studentId;
-
-}
-
-// extends
-Student2.prototype = Object.create(Person2.prototype);
-Student2.prototype.constructor = Student2;
-Student2.prototype._super = Person2;
-
-Student2.prototype.getRecordInfo = function() {
-  return this.studentId + ' ' + this.lastName + ', ' + this.firstName;
-};
-
-const student2 = new Student2(1, 'Sally', 'Thompkins');
-console.dir(student2);
-
-
-
-console.dir(Person);
-console.dir(Person2);

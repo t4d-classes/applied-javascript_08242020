@@ -17,6 +17,8 @@ export const CarTool = (props) => {
     make: '', model: '', year: 1900, color: '', price: 0,
   });
 
+  const [ cars, setCars ]= useState(props.cars.concat());
+
   const change = (e) => {
     setCarForm({
       ...carForm,
@@ -25,12 +27,21 @@ export const CarTool = (props) => {
     });
   };
 
-  console.log(carForm);
+  const addCar = () => {
+    setCars(cars.concat({
+      ...carForm,
+      id: Math.max(...cars.map(c => c.id), 0) + 1,
+    }));
+  }
+
+  const deleteCar = (carId) => {
+    setCars(cars.filter(c => c.id !== carId));
+  };
 
   return (
     <>
       <ToolHeader headerText="Car Tool" />
-      <CarTable cars={props.cars} />
+      <CarTable cars={cars} onDeleteCar={deleteCar} />
       <form>
         <div>
           <label>Make:</label>
@@ -52,6 +63,7 @@ export const CarTool = (props) => {
           <label>Price:</label>
           <input type="number" id="price-input" name="price" value={nanToValue(carForm.price)} onChange={change} />
         </div>
+        <button type="button" onClick={addCar}>Add Car</button>
       </form>
     </>
   );

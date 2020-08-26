@@ -14,10 +14,11 @@ export const CarTable = (props) => {
           <th>Year</th>
           <th>Color</th>
           <th>Price</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {props.cars.map(car => <CarViewRow key={car.id} car={car} />)}
+        {props.cars.map(car => <CarViewRow key={car.id} car={car} onDeleteCar={props.onDeleteCar} />)}
       </tbody>
     </table>
   );

@@ -2,21 +2,31 @@ import React, { useState } from 'react';
 
 export const ColorTool = (props) => {
 
-  // props.colors.push({ id: 5, name: 'teal' });
-  // props.newProp = 'test';
-  // props.colors = [];
-  // console.log(Object.isFrozen(props));
-
   const [
     colorForm /* state data */,
     setColorForm /* update the data, and re-render */
   ] = useState({ name: '', hexcode: '' } /* initial state */);
+
+  const [ colors, setColors ] = useState(props.colors.concat());
 
   const change = (e) => {
 
     setColorForm({
       ...colorForm,
       [ e.target.name ]: e.target.value,
+    });
+
+  };
+
+  const addColor = () => {
+
+    setColors(colors.concat({
+      ...colorForm,
+      id: Math.max(...colors.map(c => c.id), 0) + 1,
+    }));
+
+    setColorForm({
+      name: '', hexcode: '',
     });
 
   };
@@ -29,7 +39,7 @@ export const ColorTool = (props) => {
         <h1 className="page-header">Color Tool</h1>
       </header>
       <ul>
-        {props.colors.map(color =>
+        {colors.map(color =>
           <li key={color.id}>{color.name}</li>)}
       </ul>
       <form>
@@ -43,6 +53,7 @@ export const ColorTool = (props) => {
           <label htmlFor="color-hexcode-input">Color Hexcode:</label>
           <input type="text" id="color-hexcode-input" name="hexcode" value={colorForm.hexcode} onChange={change} />
         </div>
+        <button type="button" onClick={addColor}>Add Color</button>
       </form>
     </>
   );

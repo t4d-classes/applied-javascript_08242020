@@ -19,6 +19,8 @@ export const CarTool = (props) => {
 
   const [ cars, setCars ]= useState(props.cars.concat());
 
+  const [ editCarId, setEditCarId ] = useState(-1);
+
   const change = (e) => {
     setCarForm({
       ...carForm,
@@ -41,7 +43,8 @@ export const CarTool = (props) => {
   return (
     <>
       <ToolHeader headerText="Car Tool" />
-      <CarTable cars={cars} onDeleteCar={deleteCar} />
+      <CarTable cars={cars} editCarId={editCarId}
+        onEditCar={setEditCarId} onDeleteCar={deleteCar} />
       <form>
         <div>
           <label>Make:</label>

@@ -1,5 +1,6 @@
 <app-tool-header headerText="Car Tool"></app-tool-header>
-<app-car-table [cars]="cars"></app-car-table>
+<app-car-table [cars]="cars" [editCarId]="editCarId"
+  (editCar)="editCar($event)"></app-car-table>
 <form [formGroup]="carForm">
   <div>
     <label for="make-input">Make</label>

@@ -8,6 +8,17 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
+
+  <script>
+
+    var theSetTimeout = window.setTimeout;
+
+    setTimeout(() => {
+      console.log(theSetTimeout === window.setTimeout); // false
+    }, 5000);
+
+  </script>
   <app-root></app-root>
+
 </body>
 </html>

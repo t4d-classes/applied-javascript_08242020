@@ -7,9 +7,14 @@
       <th>Year</th>
       <th>Color</th>
       <th>Price</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr class="app-car-view-row" *ngFor="let car of cars" [car]="car"></tr>
+    <ng-container *ngFor="let car of cars">
+      <tr class="app-car-edit-row" *ngIf="car.id === editCarId" [car]="car"></tr>
+      <tr class="app-car-view-row" *ngIf="car.id !== editCarId"
+        [car]="car" (editCar)="editCar.emit($event)"></tr>
+    </ng-container>
   </tbody>
 </table>

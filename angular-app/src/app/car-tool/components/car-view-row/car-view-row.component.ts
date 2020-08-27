@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Car } from '../../models/Car';
 
@@ -9,8 +9,11 @@ import { Car } from '../../models/Car';
 })
 export class CarViewRowComponent implements OnInit {
 
-  @Input()
+  @Input() // props, value immutable
   car: Car;
+
+  @Output()
+  editCar = new EventEmitter<number>();
 
   constructor() { }
 

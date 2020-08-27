@@ -10,15 +10,22 @@ import { Car } from '../../models/Car';
 })
 export class CarHomeComponent implements OnInit {
 
+  // state, value can be changed
   headerText = 'Car Tool';
 
+  // state, value can be changed
   cars: Car[] = [
     { id: 1, make: 'Ford', model: 'Fusion Hybrid', year: 2020, color: 'white', price: 45000 },
     { id: 2, make: 'Tesla', model: 'S', year: 2019, color: 'red', price: 125000 },
   ];
 
+  // state, value can be changed
+  editCarId = -1;
+
+  // state, value can be changed
   carColors = ['red', 'green', 'blue'];
 
+  // state, value can be changed
   carForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -32,6 +39,10 @@ export class CarHomeComponent implements OnInit {
       color: '',
       price: 0,
     });
+  }
+
+  editCar(carId: number): void {
+    this.editCarId = carId;
   }
 
   addCar(): void {

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Car } from '../../models/Car';
 
+import { CarsService } from '../../services/cars.service';
+
 @Component({
   selector: 'app-car-home',
   templateUrl: './car-home.component.html',
@@ -14,10 +16,7 @@ export class CarHomeComponent implements OnInit {
   headerText = 'Car Tool';
 
   // state, value can be changed
-  cars: Car[] = [
-    { id: 1, make: 'Ford', model: 'Fusion Hybrid', year: 2020, color: 'white', price: 45000 },
-    { id: 2, make: 'Tesla', model: 'S', year: 2019, color: 'red', price: 125000 },
-  ];
+  cars: Car[] = [];
 
   // state, value can be changed
   editCarId = -1;
@@ -28,10 +27,15 @@ export class CarHomeComponent implements OnInit {
   // state, value can be changed
   carForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private carsSvc: CarsService,
+  ) { }
 
   ngOnInit(): void {
+
+    this.cars = this.carsSvc.all();
+
     this.carForm = this.fb.group({
       make: '',
       model: '',
@@ -46,14 +50,11 @@ export class CarHomeComponent implements OnInit {
   }
 
   addCar(): void {
-    this.cars = this.cars.concat({
-      ...this.carForm.value,
-      id: Math.max(...this.cars.map(c => c.id), 0) + 1,
-    });
+    this.cars = this.carsSvc.addCar(this.carForm.value).all();
   }
 
   deleteCar(carId: number): void {
-    this.cars = this.cars.filter(c => c.id !== carId);
+    this.cars = this.carsSvc.deleteCar(carId).all();
   }
 
 }

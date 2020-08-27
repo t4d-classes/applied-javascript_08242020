@@ -51,4 +51,9 @@ export class CarHomeComponent implements OnInit {
       id: Math.max(...this.cars.map(c => c.id), 0) + 1,
     });
   }
+
+  deleteCar(carId: number): void {
+    this.cars = this.cars.filter(c => c.id !== carId);
+  }
+
 }

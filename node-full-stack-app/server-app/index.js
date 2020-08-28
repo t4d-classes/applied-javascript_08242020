@@ -3,12 +3,13 @@ const express = require('express');
 
 require('dotenv').config();
 
-const { logger } = require('./logger');
-
 const { DB_USER, DB_PASS, DB_CLUSTER_HOST, PORT } = process.env;
 
 const sampleTrainingUri = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_CLUSTER_HOST}/sample_training?retryWrites=true&w=majority`;
 global.sampleTrainingConn = mongoose.createConnection(sampleTrainingUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const { logger } = require('./logger');
+const { ZipRouter } = require('./routers/ZipRouter');
 
 process.on('exit', () => {
   logger.info('existing server...');
@@ -17,6 +18,7 @@ process.on('exit', () => {
 
 const app = express();
 
+app.use('/api/zips', ZipRouter);
 app.use(
   '/', /* route */
   express.static('./public'), /* middleware function */

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { CarViewRow } from './CarViewRow';
 import { CarEditRow } from './CarEditRow';
 
-export const CarTable = ({
+export const CarTable = memo(({
   cars, editCarId,
   onEditCar: editCar,
   onDeleteCar: deleteCar,
@@ -32,7 +32,7 @@ export const CarTable = ({
     </table>
   );
 
-}
+});
 
 CarTable.defaultProps = {
   cars: [],

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-export const ToolHeader = (props) => {
+export const ToolHeader = memo((props) => {
+
+  console.log('rendering toolheader');
 
   return (
     <header>
@@ -9,7 +11,7 @@ export const ToolHeader = (props) => {
     </header>
   );
 
-};
+});
 
 ToolHeader.propTypes = {
   headerText: PropTypes.string.isRequired,

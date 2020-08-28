@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect, createRef } from 'react';
 
 import { useForm } from '../hooks/useForm';
 
@@ -10,9 +10,14 @@ const nanToValue = (value) => {
   }
 };
 
-export const CarForm = ({
+
+export const CarForm = memo(({
   buttonText, onSubmitCar,
 }) => {
+
+  const defaultControlRef = createRef();
+
+  console.log('rendering car form');
 
   const [ carForm, change, resetCarForm ] = useForm({
     make: '', model: '', year: 1900, color: '', price: 0,
@@ -23,11 +28,18 @@ export const CarForm = ({
     resetCarForm();
   };
 
+  useEffect(() => {
+    if (defaultControlRef.current) {
+      defaultControlRef.current.focus();
+    }
+  }, []);
+
   return (
     <form>
       <div>
         <label>Make:</label>
-        <input type="text" id="make-input" name="make" value={carForm.make} onChange={change} />
+        <input type="text" id="make-input" name="make"
+          value={carForm.make} onChange={change} ref={defaultControlRef} />
       </div>
       <div>
         <label>Model:</label>
@@ -49,4 +61,4 @@ export const CarForm = ({
     </form>
   );
 
-};
+});

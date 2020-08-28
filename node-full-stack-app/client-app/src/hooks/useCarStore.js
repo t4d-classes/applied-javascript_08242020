@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { CarsData } from '../services/CarsData';
 
@@ -9,9 +9,9 @@ export const useCarStore = () => {
   const [ cars, setCars ] = useState([]);
   const [ editCarId, setEditCarId ] = useState(-1);
 
-  const refreshCars = () => {
+  const refreshCars = useCallback(() => {
     return carsData.allCars().then(cars => setCars(cars));
-  };
+  }, []);
 
   useEffect(() => {
     refreshCars();
@@ -21,23 +21,23 @@ export const useCarStore = () => {
     cars,
     editCarId,
     refreshCars,
-    appendCar: async (car) => {
+    appendCar: useCallback(async (car) => {
       await carsData.appendCar(car);
       await refreshCars();
       setEditCarId(-1);
-    },
-    replaceCar: (car) => {
+    }, []),
+    replaceCar: useCallback((car) => {
       return carsData.replaceCar(car)
         .then(() => refreshCars())
         .then(() => setEditCarId(-1));
-    },
-    removeCar: (carId) => {
+    }, []),
+    removeCar: useCallback((carId) => {
       return carsData.removeCar(carId)
         .then(() => refreshCars())
         .then(() => setEditCarId(-1));
-    },
+    }, []),
     editCar: setEditCarId,
-    cancelCar: () => setEditCarId(-1),
+    cancelCar: useCallback(() => setEditCarId(-1), []),
   };
 
 };

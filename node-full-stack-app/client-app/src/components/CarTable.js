@@ -33,3 +33,7 @@ export const CarTable = ({
   );
 
 }
+
+CarTable.defaultProps = {
+  cars: [],
+};

@@ -1,0 +1,4 @@
+
+
+
+GET http://localhost:3060/api/colors HTTP/1.1

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Car } from '../../models/Car';
@@ -13,11 +13,16 @@ export class CarEditRowComponent implements OnInit {
   @Input()
   car: Car;
 
+  @Output()
+  saveCar = new EventEmitter<Car>();
+
+  @Output()
+  cancelCar = new EventEmitter<void>();
+
   // state, value can be changed
   carForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-  }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.carForm = this.fb.group({
@@ -27,7 +32,13 @@ export class CarEditRowComponent implements OnInit {
       color: this.car.color,
       price: this.car.price,
     });
+  }
 
+  doSaveCar(): void {
+    this.saveCar.emit({
+      ...this.carForm.value,
+      id: this.car.id,
+    });
   }
 
 }

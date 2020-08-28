@@ -13,7 +13,7 @@ const nodeEnv = NODE_ENV ?? 'production';
 const logger = winston.createLogger({
   level: logLevel,
   format: winston.format.json(),
-  defaultMeta: { service: 'rest-app' },
+  defaultMeta: { service: 'server-app' },
   transports: [
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
     new winston.transports.File({ filename: 'combined.log' }),
@@ -25,3 +25,5 @@ if (nodeEnv !== 'production') {
     format: winston.format.simple(),
   }));
 }
+
+module.exports.logger = logger;

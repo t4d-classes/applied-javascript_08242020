@@ -1,25 +1,40 @@
-import { useState } from 'react';
-import { useList } from './useList';
+import { useState, useEffect } from 'react';
 
-export const useCarStore = (initialCars) => {
+import { CarsData } from '../services/CarsData';
 
-  const [ cars, appendCar, replaceCar, removeCar ] = useList(initialCars);
+const carsData = new CarsData('/api');
+
+export const useCarStore = () => {
+
+  const [ cars, setCars ] = useState([]);
   const [ editCarId, setEditCarId ] = useState(-1);
+
+  const refreshCars = () => {
+    return carsData.allCars().then(cars => setCars(cars));
+  };
+
+  useEffect(() => {
+    refreshCars();
+  }, []);
 
   return {
     cars,
     editCarId,
-    appendCar: (car) => {
-      appendCar(car);
+    refreshCars,
+    appendCar: async (car) => {
+      await carsData.appendCar(car);
+      await refreshCars();
       setEditCarId(-1);
     },
     replaceCar: (car) => {
-      replaceCar(car);
-      setEditCarId(-1);
+      return carsData.replaceCar(car)
+        .then(() => refreshCars())
+        .then(() => setEditCarId(-1));
     },
     removeCar: (carId) => {
-      removeCar(carId);
-      setEditCarId(-1);
+      return carsData.removeCar(carId)
+        .then(() => refreshCars())
+        .then(() => setEditCarId(-1));
     },
     editCar: setEditCarId,
     cancelCar: () => setEditCarId(-1),

@@ -26,6 +26,14 @@ export class CarsService {
     return this;
   }
 
+  public updateCar(car: Car): CarsService {
+    const carIndex = this.cars.findIndex(c => c.id === car.id);
+    const newCars = this.cars.concat();
+    newCars[carIndex] = car;
+    this.cars = newCars;
+    return this;
+  }
+
   public deleteCar(carId: number): CarsService {
     this.cars = this.cars.filter(c => c.id !== carId);
     return this;

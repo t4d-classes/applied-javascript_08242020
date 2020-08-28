@@ -1,29 +1,5 @@
 <app-tool-header headerText="Car Tool"></app-tool-header>
 <app-car-table [cars]="cars" [editCarId]="editCarId"
-  (editCar)="editCar($event)" (deleteCar)="deleteCar($event)"></app-car-table>
-<form [formGroup]="carForm">
-  <div>
-    <label for="make-input">Make</label>
-    <input type="text" id="make-input" formControlName="make" />
-  </div>
-  <div>
-    <label for="model-input">Model</label>
-    <input type="text" id="model-input" formControlName="model" />
-  </div>
-  <div>
-    <label for="year-input">Year</label>
-    <input type="number" id="year-input" formControlName="year" />
-  </div>
-  <div>
-    <label for="color-input">Color</label>
-    <select id="color-input" formControlName="color">
-      <option value="">Select One...</option>
-      <option *ngFor="let color of carColors" [value]="color">{{color}}</option>
-    </select>
-  </div>
-  <div>
-    <label for="price-input">Price</label>
-    <input type="number" id="price-input" formControlName="price" />
-  </div>
-  <button type="button" (click)="addCar()">Add Car</button>
-</form>
+  (editCar)="editCar($event)" (deleteCar)="deleteCar($event)"
+  (saveCar)="updateCar($event)" (cancelCar)="cancelCar()"></app-car-table>
+<app-car-form buttonText="Add Car" (submitCar)="addCar($event)"></app-car-form>

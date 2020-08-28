@@ -1,5 +1,9 @@
 const express = require('express');
 
+require('dotenv').config();
+
+const { PORT } = process.env;
+
 const app = express();
 
 app.use(
@@ -7,14 +11,14 @@ app.use(
   express.static('./public'), /* middleware function */
 );
 
-app.listen(3050, (err) => {
+app.listen(PORT, (err) => {
 
   if (err) {
-    console.log(err);
+    console.log('Error: ' + err);
     return;
   }
 
-  console.log('server listening on port 3050');
+  console.log(`server listening on port ${PORT}`);
 
 });
 

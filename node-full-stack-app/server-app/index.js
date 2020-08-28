@@ -2,6 +2,8 @@ const express = require('express');
 
 require('dotenv').config();
 
+const logger = require('./logger');
+
 const { PORT } = process.env;
 
 const app = express();

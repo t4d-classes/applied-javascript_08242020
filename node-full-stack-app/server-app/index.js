@@ -4,7 +4,10 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
-const { DB_USER, DB_PASS, DB_CLUSTER_HOST, PORT } = process.env;
+const {
+  DB_USER, DB_PASS, DB_CLUSTER_HOST,
+  PORT, CLIENT_APP_URL, NODE_ENV,
+} = process.env;
 
 const sampleTrainingUri = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_CLUSTER_HOST}/sample_training?retryWrites=true&w=majority`;
 global.sampleTrainingConn = mongoose.createConnection(sampleTrainingUri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -31,10 +34,29 @@ app.use(bodyParser.json());
 app.use('/api/zips', ZipRouter);
 app.use('/api/colors', createRestRouter(Color));
 app.use('/api/cars', createRestRouter(Car));
-app.use(
-  '/', /* route */
-  express.static('./public'), /* middleware function */
-);
+
+
+if (NODE_ENV === 'development') {
+
+  // development will proxy back to the react webpack development server
+
+  const httpProxy = require('http-proxy');
+  const clientAppProxy = httpProxy.createProxyServer();
+
+  app.use('/', (req, res) => {
+    clientAppProxy.web(req, res, { target: CLIENT_APP_URL });
+  });
+
+} else {
+
+  // production will use the production build of the client react app
+  app.use(
+    '/', /* route */
+    express.static('./public'), /* middleware function */
+  );
+  
+}
+
 
 app.listen(PORT, (err) => {
 

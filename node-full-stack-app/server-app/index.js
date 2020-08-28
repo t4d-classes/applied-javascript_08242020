@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -17,6 +18,8 @@ process.on('exit', () => {
 });
 
 const app = express();
+
+app.use(bodyParser.json());
 
 app.use('/api/zips', ZipRouter);
 app.use(

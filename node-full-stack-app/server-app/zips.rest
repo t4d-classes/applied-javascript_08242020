@@ -1,0 +1,44 @@
+
+
+GET http://localhost:3060/api/zips HTTP/1.1
+
+###
+
+GET http://localhost:3060/api/zips/5f4952ada15ea73aa6d4eb47 HTTP/1.1
+
+###
+
+POST http://localhost:3060/api/zips HTTP/1.1
+Content-Type: application/json
+
+{
+  "loc": {
+    "y": 33.331165,
+    "x": 86.208934
+  },
+  "city": "ALPINE2",
+  "zip": "35014",
+  "pop": 3062,
+  "state": "AL"
+}
+
+###
+
+PUT http://localhost:3060/api/zips/5f495421225f9e3c8cb2e2c9 HTTP/1.1
+
+{
+  "_id": "5f495421225f9e3c8cb2e2c9",
+  "loc": {
+    "y": 33.331165,
+    "x": 86.208934
+  },
+  "city": "ALPINE3",
+  "zip": "35014",
+  "pop": 3062,
+  "state": "AL",
+}
+
+###
+
+DELETE http://localhost:3060/api/zips/5f4952ada15ea73aa6d4eb47 HTTP/1.1
+
